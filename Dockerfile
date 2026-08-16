@@ -37,8 +37,7 @@ COPY --from=build /app /app
 ENV RAILS_ENV=production \
     RAILS_LOG_TO_STDOUT=true \
     RAILS_SERVE_STATIC_FILES=true \
-    MONGODB_URI=mongodb://mongo:27017/ticket_system_production \
-    SECRET_KEY_BASE=override-this-in-deploy
+    MONGODB_URI=mongodb://mongo:27017/ticket_system_production
 
 # Digest and copy all assets for production serving.
 RUN bundle exec rails assets:precompile

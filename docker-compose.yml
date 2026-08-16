@@ -24,6 +24,7 @@ services:
     environment:
       RAILS_ENV: development
       MONGO_URI: mongodb://mongo:27017/ticket_system_development
+      SECRET_KEY_BASE: dev-local-compose-secret-do-not-reuse
     depends_on:
       mongo:
         condition: service_healthy
