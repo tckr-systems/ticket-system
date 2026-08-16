@@ -1,17 +1,23 @@
 services:
   mongo:
     image: mongo:8
-    # Ephemeral storage engine: all data lives in memory and is wiped on
-    # restart — perfect for development. http://docs.mongodb.com/manual/core/inmemory/
-    command: ["mongod", "--storageEngine", "ephemeralForTest"]
+    tmpfs:
+      - /data/db
+    ports:
+      - "27017:27017"
     healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand({ ping: 1 }).ok"]
+      test:
+        [
+          "CMD",
+          "mongosh",
+          "--quiet",
+          "--eval",
+          "db.adminCommand({ ping: 1 }).ok",
+        ]
       interval: 5s
       timeout: 5s
       retries: 10
       start_period: 5s
-    volumes:
-      - mongo_data:/data/db
 
   web:
     build: .
@@ -32,6 +38,3 @@ services:
       - .:/app
     stdin_open: true
     tty: true
-
-volumes:
-  mongo_data:
