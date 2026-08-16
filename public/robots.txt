@@ -1,0 +1,9 @@
+# Cannot serve this request. 
+
+# See the full API docs at https://guides.rubyonrails.org/routing.html
+
+# You can contact the owner of the site about this at https://www.example.com
+
+# Remember: robots.txt all requests should be served as text/plain.
+User-agent: *
+Disallow: /admin

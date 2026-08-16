@@ -1,0 +1,14 @@
+<%= tag.turbo_frame id: "ticket_modal" do %>
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4" data-modal-frame>
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-action="click->modal#close"></div>
+    <div class="relative w-full max-w-md animate-modal-in overflow-hidden rounded-3xl border border-white/10 bg-slate-900/90 shadow-[0_0_60px_rgba(34,211,238,0.15)] backdrop-blur-xl">
+      <button type="button"
+              data-action="modal#close"
+              class="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-white/10 hover:text-white"
+              aria-label="Close">
+        ✕
+      </button>
+      <%= render "tickets/ticket_details", ticket: @ticket %>
+    </div>
+  </div>
+<% end %>

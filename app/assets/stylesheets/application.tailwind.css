@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#04050c] text-slate-200 antialiased;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply border border-white/10 bg-white/[0.04] backdrop-blur-xl;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-400;
+  }
+
+  .field-input {
+    @apply w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 shadow-inner outline-none transition focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/20;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white;
+  }
+
+  .btn-danger-text {
+    @apply text-rose-300 hover:bg-rose-500/10 hover:text-rose-200;
+  }
+
+  .ticket-row--new {
+    animation: row-in 0.4s ease-out both;
+  }
+}
+
+/* Ambient venue lighting */
+.venue-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  will-change: transform;
+}
+.venue-glow--top {
+  top: -12rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 46rem;
+  height: 26rem;
+  background: radial-gradient(closest-side, rgba(34, 211, 238, 0.18), transparent 72%);
+}
+.venue-glow--bottom {
+  bottom: -16rem;
+  right: -10rem;
+  width: 38rem;
+  height: 38rem;
+  background: radial-gradient(closest-side, rgba(139, 92, 246, 0.16), transparent 72%);
+}
+
+/* CRT scanlines over the whole console */
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.015) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+/* "Poof!" — fluid fade-out for removed ticket rows */
+@keyframes poof {
+  0%   { opacity: 1; transform: scale(1);    filter: blur(0); }
+  40%  { opacity: 0.9; transform: scale(1.04); filter: blur(2px); }
+  100% { opacity: 0; transform: scale(0.7);  filter: blur(12px); }
+}
+.ticket-row--poof {
+  animation: poof 0.45s ease-out forwards;
+}
+
+/* New row sweep-in */
+@keyframes row-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal entrance */
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-modal-in {
+  animation: modal-in 0.22s ease-out both;
+}
+
+/* Hide the "no tickets yet" state as soon as the table gains a row. */
+.glass-card:has(tbody#tickets tr) #empty_state { display: none; }

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "==> Installing gems…"
+bundle install
+
+echo "==> Building Tailwind assets…"
+bin/rails tailwindcss:build
+
+echo "==> Creating MongoDB indexes…"
+bin/rails db:mongoid:create_indexes
+
+echo "==> Done. Start the app with: bin/dev  (or docker compose up)"

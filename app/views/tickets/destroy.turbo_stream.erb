@@ -1,0 +1,7 @@
+<%= turbo_stream.remove dom_id(@ticket) %>
+
+<%= turbo_stream.replace "sold_count" do %>
+  <span id="sold_count" class="text-4xl font-black leading-none text-cyan-300 tabular-nums"><%= Ticket.count %></span>
+<% end %>
+
+<%= turbo_stream.update "ticket_modal" do %><% end %>

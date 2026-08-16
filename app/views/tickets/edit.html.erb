@@ -1,0 +1,7 @@
+<%= tag.turbo_frame id: "ticket_form_panel", data: { controller: "edit-panel" } do %>
+  <div class="rounded-3xl border border-white/10 bg-slate-900/70 p-6 backdrop-blur-xl shadow-[0_0_50px_rgba(34,211,238,0.12)]">
+    <h2 class="mb-1 text-xl font-black text-white">Editing seat <%= @ticket.seat_id_seq %></h2>
+    <p class="mb-5 text-xs text-slate-400">Buyer: <%= @ticket.name %></p>
+    <%= render "tickets/form", ticket: @ticket %>
+  </div>
+<% end %>

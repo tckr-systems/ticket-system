@@ -1,0 +1,25 @@
+development:
+  clients:
+    default:
+      uri: <%= ENV.fetch("MONGO_URI", "mongodb://mongo:27017/ticket_system_development") %>
+  options:
+    raise_not_found_error: false
+
+test:
+  clients:
+    default:
+      uri: <%= ENV.fetch("MONGO_URI", "mongodb://mongo:27017/ticket_system_test") %>
+      options:
+        connect_timeout: 5
+  options:
+    raise_not_found_error: false
+
+production:
+  clients:
+    default:
+      uri: <%= ENV.fetch("MONGODB_URI", "mongodb://mongo:27017/ticket_system_production") %>
+      options:
+        connect_timeout: 15
+        server_selection_timeout: 15
+  options:
+    raise_not_found_error: false

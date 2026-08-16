@@ -1,0 +1,30 @@
+<div class="p-6">
+  <p class="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/70">Sold ticket</p>
+  <h2 class="mt-1 text-3xl font-black text-white"><%= ticket.name %></h2>
+  <p class="mt-1 text-sm font-medium text-slate-300">
+    <span class="font-mono font-bold text-cyan-300"><%= ticket.seat_id_seq %></span>
+    <span class="mx-1 text-slate-600">·</span>
+    <span class="text-emerald-300"><%= number_to_currency(ticket.price_paid) %></span>
+  </p>
+
+  <dl class="mt-6 space-y-3 border-t border-white/10 pt-5 text-sm">
+    <div class="flex items-start justify-between gap-4">
+      <dt class="shrink-0 text-xs font-semibold uppercase tracking-wider text-slate-500">Email</dt>
+      <dd class="break-all text-right text-slate-100"><%= ticket.email_address %></dd>
+    </div>
+    <div class="flex items-start justify-between gap-4">
+      <dt class="shrink-0 text-xs font-semibold uppercase tracking-wider text-slate-500">Address</dt>
+      <dd class="text-right text-slate-100"><%= ticket.address %></dd>
+    </div>
+    <div class="flex items-start justify-between gap-4">
+      <dt class="shrink-0 text-xs font-semibold uppercase tracking-wider text-slate-500">Booked</dt>
+      <dd class="text-right text-slate-100"><%= l(ticket.created_at, format: :long) %></dd>
+    </div>
+  </dl>
+
+  <div class="mt-6 flex items-center justify-end gap-3 border-t border-white/10 pt-5">
+    <%= button_to "Void ticket", ticket_path(ticket), method: :delete,
+                  form: { data: { turbo_confirm: "Void seat #{ticket.seat_id_seq}? This removes the ticket permanently." } },
+                  class: "btn-ghost btn-danger-text" %>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+services:
+  mongo:
+    image: mongo:8
+    # Ephemeral storage engine: all data lives in memory and is wiped on
+    # restart — perfect for development. http://docs.mongodb.com/manual/core/inmemory/
+    command: ["mongod", "--storageEngine", "ephemeralForTest"]
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand({ ping: 1 }).ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    volumes:
+      - mongo_data:/data/db
+
+  web:
+    build: .
+    command: >
+      bash -c "bundle exec rails tailwindcss:build &&
+               bundle exec rails db:mongoid:create_indexes &&
+               bundle exec rails server -b 0.0.0.0 -p 3000"
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      MONGO_URI: mongodb://mongo:27017/ticket_system_development
+    depends_on:
+      mongo:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongo_data:

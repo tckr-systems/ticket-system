@@ -1,0 +1,53 @@
+<div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+  <div>
+    <p class="text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300/70">
+      Ontário d'Ouro · Box Office Console
+    </p>
+    <h1 class="mt-2 text-4xl font-black tracking-tight text-white drop-shadow-[0_0_22px_rgba(34,211,238,0.35)]">
+      Ticket Vault
+    </h1>
+    <p class="mt-2 max-w-md text-sm leading-relaxed text-slate-400">
+      Every sold ticket for tonight's show, logged in real time. No paper,
+      no queue — just the signal.
+    </p>
+  </div>
+
+  <div class="glass-card inline-flex min-w-[9rem] flex-col items-end gap-0.5 rounded-2xl px-5 py-4">
+    <span class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">Sold</span>
+    <span id="sold_count" class="text-4xl font-black leading-none text-cyan-300 tabular-nums">
+      <%= @tickets.size %>
+    </span>
+  </div>
+</div>
+
+<%= render "tickets/form", ticket: @ticket %>
+
+<%= tag.turbo_frame id: "ticket_form_panel", class: "hidden", data: { controller: "edit-panel" } %>
+
+<div class="mt-8">
+  <div class="glass-card overflow-hidden rounded-3xl">
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[640px] text-left text-sm">
+        <thead>
+          <tr class="border-b border-white/10 text-xs uppercase tracking-wider text-cyan-200/70">
+            <th scope="col" class="px-5 py-3.5 font-semibold">Seat</th>
+            <th scope="col" class="px-5 py-3.5 font-semibold">Buyer</th>
+            <th scope="col" class="hidden px-5 py-3.5 font-semibold md:table-cell">Email</th>
+            <th scope="col" class="px-5 py-3.5 text-right font-semibold">Price paid</th>
+            <th scope="col" class="px-5 py-3.5 text-right font-semibold">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tickets" class="divide-y divide-white/5">
+          <%= render @tickets %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @tickets.empty? %>
+      <div id="empty_state" class="px-5 py-14 text-center">
+        <p class="text-3xl">🎟️</p>
+        <p class="mt-2 text-sm text-slate-400">No tickets sold yet. Book the first seat above.</p>
+      </div>
+    <% end %>
+  </div>
+</div>

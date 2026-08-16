@@ -1,0 +1,21 @@
+<%= content_tag :tr, id: dom_id(ticket), class: "ticket-row group transition-colors hover:bg-white/[0.03]" do %>
+  <td class="px-5 py-3.5 font-mono text-sm font-bold text-cyan-300"><%= ticket.seat_id_seq %></td>
+  <td class="px-5 py-3.5 font-medium text-slate-100"><%= ticket.name %></td>
+  <td class="hidden px-5 py-3.5 text-slate-400 md:table-cell"><%= ticket.email_address %></td>
+  <td class="px-5 py-3.5 text-right font-semibold tabular-nums text-emerald-300">
+    <%= number_to_currency(ticket.price_paid) %>
+  </td>
+  <td class="px-5 py-3.5">
+    <div class="flex items-center justify-end gap-1 opacity-70 transition-opacity duration-200 group-hover:opacity-100">
+      <%= link_to "View", ticket_path(ticket),
+                  data: { turbo_frame: "ticket_modal" },
+                  class: "btn-ghost" %>
+      <%= link_to "Edit", edit_ticket_path(ticket),
+                  data: { turbo_frame: "ticket_form_panel" },
+                  class: "btn-ghost" %>
+      <%= button_to "Void", ticket_path(ticket), method: :delete,
+                    form: { data: { turbo_confirm: "Void seat #{ticket.seat_id_seq}? This removes the ticket permanently." } },
+                    class: "btn-ghost btn-danger-text" %>
+    </div>
+  </td>
+<% end %>

@@ -1,0 +1,62 @@
+<%= form_with model: ticket, id: "ticket_form", data: { turbo_frame: "_top" } do |form| %>
+  <% if ticket.errors.any? %>
+    <div class="mb-4 rounded-2xl border border-rose-400/30 bg-rose-500/10 px-4 py-3">
+      <p class="text-xs font-bold uppercase tracking-wider text-rose-300">
+        <%= pluralize(ticket.errors.count, "error") %> blocked this booking
+      </p>
+      <ul class="mt-1 list-disc space-y-0.5 pl-5 text-sm text-rose-200">
+        <% ticket.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="flex items-center gap-3">
+    <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-cyan-400/10 text-xl text-cyan-300 shadow-[inset_0_0_20px_rgba(34,211,238,0.15)]">
+      ⟠
+    </span>
+    <div>
+      <h2 class="text-lg font-black text-white">
+        <%= ticket.persisted? ? "Edit ticket" : "Sell a ticket" %>
+      </h2>
+      <p class="text-xs text-slate-400">
+        <%= ticket.persisted? ? "Correct the seat or buyer details below." : "Book the next seat for tonight's show." %>
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-6 grid gap-4 sm:grid-cols-2">
+    <div>
+      <%= form.label :name, "Buyer name", class: "field-label" %>
+      <%= form.text_field :name, placeholder: "e.g. Katrina Prentice", class: "field-input", required: true %>
+    </div>
+
+    <div>
+      <%= form.label :seat_id_seq, "Seat", class: "field-label" %>
+      <%= form.text_field :seat_id_seq, placeholder: "e.g. E14", class: "field-input", required: true %>
+    </div>
+
+    <div class="sm:col-span-2">
+      <%= form.label :email_address, "Email address", class: "field-label" %>
+      <%= form.email_field :email_address, placeholder: "buyer@example.com", class: "field-input", required: true %>
+    </div>
+
+    <div class="sm:col-span-2">
+      <%= form.label :address, "Address", class: "field-label" %>
+      <%= form.text_field :address, placeholder: "Where the ticket is delivered", class: "field-input", required: true %>
+    </div>
+
+    <div class="sm:col-span-2">
+      <%= form.label :price_paid, "Price paid (£)", class: "field-label" %>
+      <%= form.number_field :price_paid, step: "0.01", min: "0", placeholder: "0.00", class: "field-input", required: true %>
+    </div>
+  </div>
+
+  <div class="mt-6 flex flex-wrap items-center justify-end gap-3">
+    <% if ticket.persisted? %>
+      <%= link_to "Cancel", root_path, class: "btn-ghost" %>
+    <% end %>
+    <%= form.submit ticket.persisted? ? "Save changes" : "Book ticket", class: "btn-primary" %>
+  </div>
+<% end %>
